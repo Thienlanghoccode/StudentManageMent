@@ -23,10 +23,9 @@ public class StudentRepositoryCustomImpl implements StudentRepositoryCustom {
 
     @Override
     public Page<Student> findStudents(Pageable pageable, StudentSpecialSearch studentSpecialSearch) {
-        StringBuilder sql = new StringBuilder("select s.* FROM student s ");
+        StringBuilder sql = new StringBuilder("select s.* FROM stud_student s ");
         sql.append("WHERE 1 = 1 ");
         queryByParams(sql, studentSpecialSearch);
-        sql.append(" GROUP BY s.id");
         Query query = entityManager.createNativeQuery(sql.toString(), Student.class);
         return new PageImpl<>(query.getResultList());
     }

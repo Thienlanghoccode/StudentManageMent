@@ -55,12 +55,12 @@ public class ClassroomServiceImpl implements ClassroomService {
                 } else {
                     student = studentMapper.toStudent(requestDTO);
                 }
-                student.setClassroom(classroom);
+//                student.setClassroom(classroom);
                 students.add(student);
             });
         }
 
-        classroom.setStudents(students);
+//        classroom.setStudents(students);
         classroomRepository.save(classroom);
     }
 

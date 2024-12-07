@@ -1,5 +1,6 @@
 package vn.yenthan.dto.request;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -26,5 +27,6 @@ public class StudentRequestDTO {
     private String email;
 
     @NotBlank(message = "student's phone must not be blank !")
+    @Min(value = 1000000000, message = "student's phone must have at least 10 digits!")
     private String phoneNumber;
 }

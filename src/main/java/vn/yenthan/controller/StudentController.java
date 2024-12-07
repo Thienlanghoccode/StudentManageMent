@@ -42,7 +42,7 @@ public class StudentController {
     }
 
     @GetMapping
-    public PageResponse<?> getAllStudents(@RequestParam(defaultValue = "0") int pageNumber,
+    public PageResponse<?> getStudents(@RequestParam(defaultValue = "0") int pageNumber,
                                           @RequestParam(defaultValue = "5") int pageSize,
                                           @RequestParam(required = false) Map<String, Object> filters) {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);

@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findById(id).orElseThrow(()->new DataNotFoundException("Student not found"));
         student.setStudentCode(requestDTO.getStudentCode());
         student.setStudentName(requestDTO.getStudentName());
-        student.setBirthDay(requestDTO.getBirthDay());
+        student.setDateOfBirth(requestDTO.getBirthDay());
         student.setGender(requestDTO.getGender());
         student.setEmail(requestDTO.getEmail());
         student.setPhoneNumber(requestDTO.getPhoneNumber());
