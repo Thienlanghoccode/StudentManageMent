@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vn.yenthan.dto.request.StudentDeleteRequest;
+import vn.yenthan.dto.request.IdDeleteRequest;
 import vn.yenthan.dto.request.StudentRequestDTO;
 import vn.yenthan.dto.request.StudentSpecialSearch;
 import vn.yenthan.entity.Student;
@@ -15,6 +15,7 @@ import vn.yenthan.mapper.StudentMapper;
 import vn.yenthan.repository.StudentRepository;
 import vn.yenthan.service.StudentService;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -28,8 +29,8 @@ public class StudentServiceImpl implements StudentService {
     @Override
     @Transactional
     public void addStudent(StudentRequestDTO requestDTO) {
-        if (studentRepository.existsByEmail(requestDTO.getEmail())) {
-            throw new DataIntegrityViolationException("Email already exists");
+        if (studentRepository.existsByStudentCode(requestDTO.getStudentCode())) {
+            throw new DataIntegrityViolationException("Student already exists");
         }
         Student student = studentMapper.toStudent(requestDTO);
         studentRepository.save(student);
@@ -41,7 +42,7 @@ public class StudentServiceImpl implements StudentService {
         Student student = studentRepository.findById(id).orElseThrow(()->new DataNotFoundException("Student not found"));
         student.setStudentCode(requestDTO.getStudentCode());
         student.setStudentName(requestDTO.getStudentName());
-        student.setDateOfBirth(requestDTO.getBirthDay());
+        student.setDateOfBirth(requestDTO.getDateOfBirth());
         student.setGender(requestDTO.getGender());
         student.setEmail(requestDTO.getEmail());
         student.setPhoneNumber(requestDTO.getPhoneNumber());
@@ -50,14 +51,21 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     @Transactional
-    public void deleteStudent(StudentDeleteRequest request) {
+    public void deleteStudent(IdDeleteRequest request) {
         if(request.getId() != null) {
             if(studentRepository.existsById(request.getId())) {
-                studentRepository.deleteById(request.getId());
+                Student student = studentRepository.findById(request.getId()).orElseThrow(()->new DataNotFoundException("Student not found"));
+                student.setIsDeleted(true);
+                studentRepository.save(student);
             } else throw new DataNotFoundException("Student not found");
         }
         else if (request.getIds() != null && !request.getIds().isEmpty()) {
-            studentRepository.deleteAllById(request.getIds());
+            List<Student> students = studentRepository.findAllById(request.getIds());
+            if (students.isEmpty()) {
+                throw new DataNotFoundException("No students found with the provided IDs.");
+            }
+            students.forEach(student -> student.setIsDeleted(true));
+            studentRepository.saveAll(students);
         }
     }
 

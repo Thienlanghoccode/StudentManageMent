@@ -11,6 +11,8 @@ import java.util.Date;
 @Getter
 public class StudentRequestDTO {
 
+    private Long id;
+
     @NotBlank(message = "student's code must not be blank !")
     private String studentCode;
 
@@ -18,7 +20,7 @@ public class StudentRequestDTO {
     private String studentName;
 
     @NotNull(message = "student's birthday must not be null !")
-    private Date birthDay;
+    private Date dateOfBirth;
 
     @NotNull(message = "student's gender must not be null !")
     private Gender gender;
@@ -27,6 +29,5 @@ public class StudentRequestDTO {
     private String email;
 
     @NotBlank(message = "student's phone must not be blank !")
-    @Min(value = 1000000000, message = "student's phone must have at least 10 digits!")
     private String phoneNumber;
 }

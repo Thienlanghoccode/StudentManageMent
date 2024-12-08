@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-public class StudentDeleteRequest {
+public class IdDeleteRequest {
     private Long id;
     private List<Long> ids;
 }
