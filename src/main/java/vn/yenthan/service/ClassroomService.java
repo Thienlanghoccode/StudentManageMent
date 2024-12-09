@@ -2,11 +2,10 @@ package vn.yenthan.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import vn.yenthan.dto.request.ClassroomRequest;
+import vn.yenthan.dto.request.classroom.ClassroomRequest;
 import vn.yenthan.dto.request.IdDeleteRequest;
-import vn.yenthan.dto.request.StudentRequestDTO;
+import vn.yenthan.dto.request.student.StudentRequestDTO;
 import vn.yenthan.dto.response.ClassroomResponse;
-import vn.yenthan.entity.Classroom;
 
 import java.util.List;
 

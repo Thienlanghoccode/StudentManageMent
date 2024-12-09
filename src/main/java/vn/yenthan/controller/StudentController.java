@@ -10,7 +10,7 @@ import vn.yenthan.core.model.PageResponse;
 import vn.yenthan.core.model.SuccessResponse;
 import vn.yenthan.core.util.ResponseUtil;
 import vn.yenthan.dto.request.IdDeleteRequest;
-import vn.yenthan.dto.request.StudentRequestDTO;
+import vn.yenthan.dto.request.student.StudentRequestDTO;
 import vn.yenthan.entity.Student;
 import vn.yenthan.service.StudentService;
 

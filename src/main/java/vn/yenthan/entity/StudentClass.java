@@ -8,7 +8,7 @@ import lombok.Setter;
 import vn.yenthan.core.util.EntityBase;
 
 @Entity
-@Table(name = "student_classroom")
+@Table(name = "tbl_student_classroom")
 @Getter
 @Setter
 public class StudentClass extends EntityBase {

@@ -6,9 +6,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import vn.yenthan.dto.request.ClassroomRequest;
+import vn.yenthan.dto.request.classroom.ClassroomRequest;
 import vn.yenthan.dto.request.IdDeleteRequest;
-import vn.yenthan.dto.request.StudentRequestDTO;
+import vn.yenthan.dto.request.student.StudentRequestDTO;
 import vn.yenthan.dto.response.ClassroomResponse;
 import vn.yenthan.entity.Classroom;
 import vn.yenthan.entity.Student;
@@ -77,6 +77,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
+    @Transactional
     public void updateClassroom(ClassroomRequest classroomRequest) {
         Classroom classroom = classroomRepository.findById(classroomRequest.getId())
                 .orElseThrow(() -> new DataNotFoundException("Classroom not found"));
@@ -90,6 +91,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     @Override
+    @Transactional
     public void deleteClassroom(IdDeleteRequest request) {
         if(request.getId() != null) {
             if(classroomRepository.existsById(request.getId())) {

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import vn.yenthan.entity.Student;
-import vn.yenthan.repository.custom.StudentRepositoryCustom;
+import vn.yenthan.core.jpa.custom.StudentRepositoryCustom;
 
 import java.util.List;
 
@@ -16,8 +16,8 @@ public interface StudentRepository extends JpaRepository<Student, Long>, Student
 
     @Query(value = """
                 SELECT s.*
-                FROM stud_student s
-                JOIN student_classroom sc ON s.student_code = sc.student_code
+                FROM tbl_student s
+                JOIN tbl_student_classroom sc ON s.student_code = sc.student_code
                 WHERE sc.class_code LIKE %:classCode%
             """, nativeQuery = true)
     List<Student> findAllByClassCode(@Param("classCode") String classCode);

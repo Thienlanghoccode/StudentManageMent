@@ -1,8 +1,9 @@
-package vn.yenthan.dto.request;
+package vn.yenthan.dto.request.classroom;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import vn.yenthan.dto.request.student.StudentRequestDTO;
 
 import java.util.List;
 

@@ -3,8 +3,8 @@ package vn.yenthan.mapper;
 
 import org.mapstruct.Mapper;
 import vn.yenthan.core.util.MapUtil;
-import vn.yenthan.dto.request.StudentRequestDTO;
-import vn.yenthan.dto.request.StudentSpecialSearch;
+import vn.yenthan.dto.request.student.StudentRequestDTO;
+import vn.yenthan.dto.request.student.StudentSpecialSearch;
 import vn.yenthan.entity.Student;
 
 import java.util.Map;

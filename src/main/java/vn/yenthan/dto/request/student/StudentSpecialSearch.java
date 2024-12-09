@@ -1,4 +1,4 @@
-package vn.yenthan.dto.request;
+package vn.yenthan.dto.request.student;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

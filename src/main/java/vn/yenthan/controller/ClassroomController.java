@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import vn.yenthan.core.model.PageResponse;
 import vn.yenthan.core.model.SuccessResponse;
 import vn.yenthan.core.util.ResponseUtil;
-import vn.yenthan.dto.request.ClassroomRequest;
+import vn.yenthan.dto.request.classroom.ClassroomRequest;
 import vn.yenthan.dto.request.IdDeleteRequest;
-import vn.yenthan.dto.request.StudentRequestDTO;
+import vn.yenthan.dto.request.student.StudentRequestDTO;
 import vn.yenthan.dto.response.ClassroomResponse;
-import vn.yenthan.entity.Classroom;
 import vn.yenthan.service.ClassroomService;
 
 import java.util.List;

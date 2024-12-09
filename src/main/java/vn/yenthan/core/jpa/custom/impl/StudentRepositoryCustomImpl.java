@@ -1,4 +1,4 @@
-package vn.yenthan.repository.custom.impl;
+package vn.yenthan.core.jpa.custom.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -8,11 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
-import vn.yenthan.dto.request.StudentSpecialSearch;
+import vn.yenthan.dto.request.student.StudentSpecialSearch;
 import vn.yenthan.entity.Student;
-import vn.yenthan.repository.custom.StudentRepositoryCustom;
+import vn.yenthan.core.jpa.custom.StudentRepositoryCustom;
 
 import java.lang.reflect.Field;
+
+import static vn.yenthan.core.jpa.util.ToSnakeCaseUtil.toSnakeCase;
 
 @Repository
 @Primary
@@ -23,7 +25,7 @@ public class StudentRepositoryCustomImpl implements StudentRepositoryCustom {
 
     @Override
     public Page<Student> findStudents(Pageable pageable, StudentSpecialSearch studentSpecialSearch) {
-        StringBuilder sql = new StringBuilder("select s.* FROM stud_student s ");
+        StringBuilder sql = new StringBuilder("select s.* FROM tbl_student s ");
         sql.append("WHERE 1 = 1 ");
         queryByParams(sql, studentSpecialSearch);
         Query query = entityManager.createNativeQuery(sql.toString(), Student.class);
@@ -51,18 +53,4 @@ public class StudentRepositoryCustomImpl implements StudentRepositoryCustom {
             }
         }
     }
-
-    public static String toSnakeCase(String camelCase) {
-        StringBuilder result = new StringBuilder();
-        for (char c : camelCase.toCharArray()) {
-            if (Character.isUpperCase(c)) {
-                result.append('_').append(Character.toLowerCase(c));
-            } else {
-                result.append(c);
-            }
-        }
-        return result.toString();
-    }
-
-
 }

@@ -8,18 +8,17 @@ import lombok.Setter;
 import vn.yenthan.core.util.EntityBase;
 
 @Entity
-@Table(name = "tbl_classroom")
+@Table(name = "tbl_subject")
 @Getter
 @Setter
-public class Classroom extends EntityBase {
+public class Subject extends EntityBase {
 
-    @Column(name = "class_code",nullable = false, unique = true)
-    private String classCode;
+    @Column(name = "subject_code", unique = true, nullable = false, length = 20)
+    private String subjectCode;
 
-    @Column(name = "class_name", length = 100)
-    private String className;
+    @Column(name = "subject_name", length = 100)
+    private String subjectName;
 
     @Column(name = "description")
     private String description;
-
 }

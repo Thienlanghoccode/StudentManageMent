@@ -9,7 +9,7 @@ import vn.yenthan.enums.Gender;
 import java.util.Date;
 
 @Entity
-@Table(name = "stud_student")
+@Table(name = "tbl_student")
 @Getter
 @Setter
 public class Student extends EntityBase {

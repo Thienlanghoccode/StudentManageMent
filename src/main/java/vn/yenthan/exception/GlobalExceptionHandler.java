@@ -1,8 +1,10 @@
 package vn.yenthan.exception;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -29,6 +31,26 @@ public class GlobalExceptionHandler {
         List<String> errors = new ArrayList<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> errors.add(error.getDefaultMessage())
         );
+
+        return ResponseUtil.err(errors.toString(), HttpStatus.BAD_REQUEST.value());
+    }
+
+    @ExceptionHandler(InvalidDataAccessApiUsageException.class)
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    protected ErrorResponse handleInvalidDataAccessApiUsageException(InvalidDataAccessApiUsageException ex) {
+
+        return ResponseUtil.err(ex.getMessage(), HttpStatus.BAD_REQUEST.value());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    @ResponseBody
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleConstraintViolationException(ConstraintViolationException ex) {
+        List<String> errors = new ArrayList<>();
+        ex.getConstraintViolations().forEach(violation -> {
+            errors.add(violation.getPropertyPath() + ": " + violation.getMessage());
+        });
 
         return ResponseUtil.err(errors.toString(), HttpStatus.BAD_REQUEST.value());
     }
