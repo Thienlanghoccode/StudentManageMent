@@ -3,14 +3,13 @@ package vn.yenthan.dto.request.classroom;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
-import vn.yenthan.dto.request.student.StudentRequestDTO;
+import vn.yenthan.dto.request.student.StudentRequest;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
-public class ClassroomRequest {
-
-    private Long id;
+public class ClassroomRequest implements Serializable {
 
     @NotBlank(message = "Class code must not be blank !")
     private String classCode;
@@ -22,5 +21,5 @@ public class ClassroomRequest {
     private String description;
 
     @NotNull(message = "student list must not be null")
-    private List<StudentRequestDTO> students;
+    private List<StudentRequest> students;
 }

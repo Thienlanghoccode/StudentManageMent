@@ -3,25 +3,22 @@ package vn.yenthan.core.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig {
     private static final String[] WHITE_LIST_URL = {
-            "/api/v1/auth/**",
-            "/v2/api-docs",
-            "/v3/api-docs",
             "/v3/api-docs/**",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui/**",
-            "/webjars/**",
             "/swagger-ui.html",
-            "/api/v1/media/get/**",
-            "/api/v1/media/view/**"
+            "/webjars/**",
+            "/swagger-resources/configuration/ui",
+            "/swagger-resources/configuration/security",
+            "/swagger-ui.html/**",
+            "/swagger-ui/**",
+            "/auth/**"
     };
 
     @Bean

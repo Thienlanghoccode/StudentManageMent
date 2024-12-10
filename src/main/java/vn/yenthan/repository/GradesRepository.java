@@ -20,4 +20,7 @@ public interface GradesRepository extends JpaRepository<Grades, Long> {
                 WHERE g.subject_code = :subjectCode
             """, nativeQuery = true)
     List<Object[]> findAllStudentGrades(@Param("subjectCode") String subjectCode);
+
+    @Query(value = "SELECT AVG(g.score) FROM tbl_grades g WHERE g.student_code = :studentCode", nativeQuery = true)
+    Double getAverageScoreByStudentCode(@Param("studentCode") String studentCode);
 }

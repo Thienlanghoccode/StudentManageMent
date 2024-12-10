@@ -5,12 +5,11 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import vn.yenthan.enums.Gender;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
-public class StudentRequestDTO {
-
-    private Long id;
+public class StudentRequest implements Serializable {
 
     @NotBlank(message = "student's code must not be blank !")
     private String studentCode;

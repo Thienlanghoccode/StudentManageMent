@@ -5,10 +5,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
-@Getter
-public class GradesRequest {
+import java.io.Serializable;
 
-    private Long id;
+@Getter
+public class GradesRequest implements Serializable  {
 
     @NotBlank(message = "student code must not be blank")
     private String studentCode;

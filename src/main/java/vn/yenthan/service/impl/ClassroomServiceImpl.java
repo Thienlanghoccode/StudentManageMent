@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.yenthan.dto.request.classroom.ClassroomRequest;
 import vn.yenthan.dto.request.IdDeleteRequest;
-import vn.yenthan.dto.request.student.StudentRequestDTO;
+import vn.yenthan.dto.request.classroom.ClassroomUpdateRequest;
+import vn.yenthan.dto.request.student.StudentRequest;
 import vn.yenthan.dto.response.ClassroomResponse;
 import vn.yenthan.entity.Classroom;
 import vn.yenthan.entity.Student;
@@ -40,10 +41,10 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     @Override
     @Transactional
-    public void addClassroom(ClassroomRequest classroomRequest, List<StudentRequestDTO> studentRequestDTO) {
+    public void addClassroom(ClassroomRequest classroomRequest, List<StudentRequest> studentRequest) {
         Classroom classroom = classroomMapper.toClassRoom(classroomRequest);
         classroomRepository.save(classroom);
-        addStudentToClass(classroomRequest, studentRequestDTO);
+        addStudentToClass(classroomRequest, studentRequest);
     }
 
     @Override
@@ -78,7 +79,7 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     @Override
     @Transactional
-    public void updateClassroom(ClassroomRequest classroomRequest) {
+    public void updateClassroom(ClassroomUpdateRequest classroomRequest) {
         Classroom classroom = classroomRepository.findById(classroomRequest.getId())
                 .orElseThrow(() -> new DataNotFoundException("Classroom not found"));
         classroom.setClassCode(classroomRequest.getClassCode());
@@ -86,8 +87,8 @@ public class ClassroomServiceImpl implements ClassroomService {
         classroom.setClassName(classroomRequest.getClassName());
         classroomRepository.save(classroom);
 
-        List<StudentRequestDTO> studentRequestDTO = classroomRequest.getStudents();
-        addStudentToClass(classroomRequest, studentRequestDTO);
+        List<StudentRequest> studentRequest = classroomRequest.getStudents();
+        addStudentToClass(classroomRequest, studentRequest);
     }
 
     @Override
@@ -107,9 +108,9 @@ public class ClassroomServiceImpl implements ClassroomService {
         }
     }
 
-    private void addStudentToClass(ClassroomRequest classroomRequest, List<StudentRequestDTO> studentRequestDTO) {
-        if (!studentRequestDTO.isEmpty()) {
-            studentRequestDTO.forEach(requestDTO -> {
+    private void addStudentToClass(ClassroomRequest classroomRequest, List<StudentRequest> studentRequest) {
+        if (!studentRequest.isEmpty()) {
+            studentRequest.forEach(requestDTO -> {
                 if (studentRepository.existsByStudentCode(requestDTO.getStudentCode())) {
                     Student student = studentRepository.findByStudentCode(requestDTO.getStudentCode());
                     StudentClass studentClass = new StudentClass();

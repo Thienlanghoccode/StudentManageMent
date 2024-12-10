@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vn.yenthan.dto.request.grades.GradesRequest;
+import vn.yenthan.dto.request.grades.GradesUpdateRequest;
+import vn.yenthan.dto.response.AverageScoreResponse;
 import vn.yenthan.dto.response.StudentGradesResponse;
 import vn.yenthan.dto.response.SubjectResponse;
 import vn.yenthan.entity.Grades;
@@ -13,6 +15,7 @@ import vn.yenthan.mapper.GradesMapper;
 import vn.yenthan.repository.GradesRepository;
 import vn.yenthan.repository.SubjectRepository;
 import vn.yenthan.service.GradesService;
+import vn.yenthan.util.GPAUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +40,7 @@ public class GradesServiceImpl implements GradesService {
 
     @Override
     @Transactional
-    public void updateGrade(GradesRequest request) {
+    public void updateGrade(GradesUpdateRequest request) {
         Grades grades = gradesRepository.findById(request.getId())
                 .orElseThrow(() -> new DataNotFoundException("Grades not found"));
         grades.setSubjectCode(request.getSubjectCode());
@@ -65,5 +68,14 @@ public class GradesServiceImpl implements GradesService {
             subjectResponses.add(subjectResponse);
         }
         return subjectResponses;
+    }
+
+    @Override
+    public AverageScoreResponse getAverageScoreByStudentCode(String studentCode) {
+        AverageScoreResponse response = new AverageScoreResponse();
+        Double gpa = gradesRepository.getAverageScoreByStudentCode(studentCode);
+        response.setGpa(gpa);
+        response.setAcademicPerformance(GPAUtil.classifyGPA(gpa));
+        return response;
     }
 }

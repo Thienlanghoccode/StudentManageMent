@@ -7,5 +7,5 @@ import vn.yenthan.entity.Classroom;
 @Mapper(componentModel = "spring")
 public interface ClassroomMapper {
 
-    Classroom toClassRoom (ClassroomRequest classroomRequest);
+    Classroom toClassRoom (ClassroomRequest classroomUpdateRequest);
 }

@@ -1,2 +1,18 @@
 server:
   port: 8081
+
+##Swagger-ui custom path
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    try-it-out-enabled: true
+    filter: true
+
+##Custom documentation Swagger-UI
+open:
+  api:
+    title: Open API Student Management
+    version: v1.0.0
+    description: Open Api Service documentation for Student Management Project
+    serverUrl: http://localhost:8081/
+    serverName: Local Environment

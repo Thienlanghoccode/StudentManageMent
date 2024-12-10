@@ -25,11 +25,14 @@ public class StudentRepositoryCustomImpl implements StudentRepositoryCustom {
 
     @Override
     public Page<Student> findStudents(Pageable pageable, StudentSpecialSearch studentSpecialSearch) {
-        StringBuilder sql = new StringBuilder("select s.* FROM tbl_student s ");
-        sql.append("WHERE 1 = 1 ");
+        StringBuilder sql = new StringBuilder("SELECT s.* FROM tbl_student s ");
+        if (studentSpecialSearch != null && studentSpecialSearch.getClassCode() != null) {
+            sql.append(" JOIN tbl_student_classroom sc ON s.student_code = sc.student_code ");
+        }
+        sql.append(" WHERE 1 = 1 ");
         queryByParams(sql, studentSpecialSearch);
         Query query = entityManager.createNativeQuery(sql.toString(), Student.class);
-        return new PageImpl<>(query.getResultList());
+        return new PageImpl<>(query.getResultList(), pageable, query.getResultList().size());
     }
 
     public static void queryByParams(StringBuilder sql, StudentSpecialSearch studentSpecialSearch) {
@@ -45,7 +48,15 @@ public class StudentRepositoryCustomImpl implements StudentRepositoryCustom {
                     throw new RuntimeException(e.getMessage());
                 }
                 if (value != null && !value.toString().isBlank()) {
-                    if (field.getType().equals(String.class)) {
+                    if (fieldName.equals("age")) {
+                        sql.append(" AND TIMESTAMPDIFF(YEAR, s.date_of_birth, CURDATE()) = ").append(value);
+                    } else if (fieldName.equals("gender")) {
+                        sql.append(" AND s.gender = '").append(value).append("' ");
+                    }
+                    else if (fieldName.equals("classCode")) {
+                        sql.append(" AND sc.class_code LIKE '%").append(studentSpecialSearch.getClassCode()).append("%' ");
+                    }
+                    else if (field.getType().equals(String.class)) {
                         String snakeCaseFieldName = toSnakeCase(fieldName);
                         sql.append(" AND s.").append(snakeCaseFieldName).append(" LIKE '%").append(value).append("%' ");
                     }
