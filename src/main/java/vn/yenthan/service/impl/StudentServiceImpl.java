@@ -95,7 +95,11 @@ public class StudentServiceImpl implements StudentService {
             StudentGPAResponse response = new StudentGPAResponse();
             response.setStudent(student);
             AverageScoreResponse average = new AverageScoreResponse();
-            Double gpa = gradesRepository.getAverageScoreByStudentCode(student.getStudentCode());
+            Double gpa;
+            if(gradesRepository.getAverageScoreByStudentCode(student.getStudentCode()) != null) {
+                gpa = gradesRepository.getAverageScoreByStudentCode(student.getStudentCode());
+            }
+            else gpa = 0.0;
             average.setGpa(gpa);
             average.setAcademicPerformance(GPAUtil.classifyGPA(gpa));
             response.setAverageScore(average);
